@@ -303,6 +303,16 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+    var calls = {};
+    return function(...args) {
+      var key = [...args].toString();
+      if (_.contains(Object.keys(calls), key)) {
+        return calls[key];
+      }
+      var value = func.apply(this, args);
+      calls[key] = value;
+      return value;
+    };
   };
 
   // Delays a function for the given number of milliseconds, and then calls
