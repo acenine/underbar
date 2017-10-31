@@ -340,7 +340,19 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    
+    var shuffled = array.slice();
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    }
+    for (var i = shuffled.length - 1; i > 0; i--) {
+      var randIndex = getRandomIntInclusive(0, i);
+      var a = shuffled[i];
+      shuffled[i] = shuffled[randIndex];
+      shuffled[randIndex] = a;
+    }
+    return shuffled;
   };
 
 
