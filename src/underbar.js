@@ -304,12 +304,12 @@
   // instead if possible.
   _.memoize = function(func) {
     var calls = {};
-    return function(...args) {
-      var key = [...args].toString();
+    return function() {
+      var key = [...arguments].toString() + arguments.length;
       if (_.contains(Object.keys(calls), key)) {
         return calls[key];
       }
-      var value = func.apply(this, args);
+      var value = func.apply(this, arguments);
       calls[key] = value;
       return value;
     };
