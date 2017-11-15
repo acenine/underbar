@@ -172,7 +172,7 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
     var total;
-    accumulator != undefined? total = accumulator: total = collection[0];
+    accumulator === undefined? total = collection[0]: total = accumulator;
     _.each(accumulator === undefined? collection.slice(1, collection.length): collection, function(item) {
       total = iterator(total, item);
     });
@@ -211,7 +211,7 @@
     iterator === undefined ? iterator = _.identity : iterator;
     if (_.every(collection, function(item) {
       return !iterator(item);
-    })) {
+    })) { 
       return false;
     }
     return true;
@@ -367,6 +367,13 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    return _.map(collection, function(elt){
+
+      if (typeof functionOrKey === 'string') {
+        return elt[functionOrKey].apply(elt, args);
+      }
+      return functionOrKey.apply(elt, args);
+    });
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -382,6 +389,7 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
