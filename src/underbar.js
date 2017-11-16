@@ -451,7 +451,27 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+    var args = Array.from(arguments);
+    //find longest array (reduce)
+    //for each index add that val and all other vals at that index to an index list 
+    //add to result list
+    var longest = _.reduce(args, function(longest, array) {
+      if (array.length > longest.length) {
+        return array;
+      }
+      return longest;
+    });
+    var result = []; 
+    //foreach ith elt of longest, go through each elt of args and take the ith elt
+    for (var i = 0; i <longest.length; i++) {
+      var zipped = [];
+       for (var j = 0; j < args.length; j++){
+        zipped.push(args[j][i]);
+      }
+      result.push(zipped);
+    }
 
+    return result;
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
