@@ -442,7 +442,16 @@
     return sorted;
     
   };
-
+/*
+  var findLongest = function(arrays) {
+    var longest = _.reduce(arrays, function(longest, arr) {
+      if (arr.length > longest.length) {
+        return array;
+      }
+      return longest;
+    });
+  }
+  */
   // Zip together two or more arrays with elements of the same index
   // going together.
   //
@@ -490,6 +499,24 @@
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() { // filter??
+    var args = Array.from(arguments);
+    var longest = _.reduce(args, function(longest, array) {
+      if (array.length > longest.length) {
+        return array;
+      }
+      return longest;
+    });
+    var result = []; 
+    // for each item in longest, see if every other array contains it, if yes push to result
+    _.each(longest, function(item){
+      var inEveryArray = _.every(args, function(array) {
+        return _.contains(array, item);
+      })
+      if (inEveryArray) {
+        result.push(item);
+      }
+    });
+    return result; 
   };
 
   // Take the difference between one array and a number of other arrays.
