@@ -442,16 +442,6 @@
     return sorted;
     
   };
-/*
-  var findLongest = function(arrays) {
-    var longest = _.reduce(arrays, function(longest, arr) {
-      if (arr.length > longest.length) {
-        return array;
-      }
-      return longest;
-    });
-  }
-  */
   // Zip together two or more arrays with elements of the same index
   // going together.
   //
@@ -522,6 +512,15 @@
   // Take the difference between one array and a number of other arrays.
   // Only the elements present in just the first array will remain.
   _.difference = function(array) {
+    var args = Array.from(arguments);
+    var inters = [];
+    for (var i = 1; i < args.length; i++) {
+      inters = inters.concat(_.intersection(args[0], args[i]));
+
+    }
+    return _.reject(args[0], function(item){
+      return _.contains(inters, item);
+    });
   };
 
   // Returns a function, that, when invoked, will only be triggered at most once
