@@ -383,7 +383,7 @@
   _.sortBy = function(collection, iterator) {
     var copy = collection.slice();
     var sorted = [];
-    var Show=_.once(alert);
+    //var Show=_.once(alert);
     while (copy.length !== 0) {
 //if every item in copy is undefined, sorted.push(copy)
 //else minInd is the first non undefined 
@@ -438,8 +438,6 @@
 
         sorted.push(copy.splice(minIndex, 1)[0]);
       //}
-      //alert(
-        //JSON.stringify(copy.splice(minInd, 1)[0]));
     }
     return sorted;
     
@@ -478,7 +476,15 @@
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray, result) {
+  _.flatten = function(nestedArray, result) { // might try recursion
+    result === undefined ? result = [] : result; 
+    _.each(nestedArray, function(item){
+      if(Array.isArray(item)) { //is array
+        return _.flatten(item, result);
+      }
+      result.push(item);
+    });
+    return result
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
