@@ -381,6 +381,68 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+    var copy = collection.slice();
+    var sorted = [];
+    var Show=_.once(alert);
+    while (copy.length !== 0) {
+//if every item in copy is undefined, sorted.push(copy)
+//else minInd is the first non undefined 
+//minInd is _.some non undefined term
+      var minInd;
+    /*
+      var everyItemUndf =_.every(copy, function(item){
+        return item === undefined;
+      });
+      if (everyItemUndf) {
+        sorted = _.extend(sorted, copy);
+        copy=[];
+      }else {
+      */
+        minInd = _.reduce(copy, function(index, item) {
+          if (index === -1 && item !== undefined) {
+            return _.indexOf(copy, item);
+          }
+          return index;
+        }, -1);
+  
+      /*
+      if(minInd === -1) {
+        sorted = _.extend(sorted, copy);
+        copy=[];
+      } 
+      */
+        var minIndex = _.reduce(copy, function(index, item){
+          // if string iterator
+          if (typeof iterator === 'string') {
+            if (item[iterator] < copy[index][iterator]) {
+              return _.indexOf(copy, item);
+            }
+            return index;
+          }
+          //if function iterator
+          if (iterator.call(null , item) < iterator.call(null, copy[index])) {
+            return _.indexOf(copy, item);
+          }
+          return index;
+        }, minInd);
+    /*/////
+      copy.forEach(function(obj, ind){
+        typeof iterator === 'string' ? iterator = obj.iterator : iterator;
+        //if (iterator.call(null, obj) < iterator.call(null, copy[minInd])) { //
+        if ((iterator.call(null, obj) !== undefined) && !(iterator.call(null, obj) > iterator.call(null, copy[minInd])) ) {
+        //if (!(iterator.call(null, copy[minInd])>iterator.call(null, obj))) {
+          minInd = ind;
+        }
+      });
+    *//////
+
+        sorted.push(copy.splice(minIndex, 1)[0]);
+      //}
+      //alert(
+        //JSON.stringify(copy.splice(minInd, 1)[0]));
+    }
+    return sorted;
+    
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -401,7 +463,7 @@
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
-  _.intersection = function() {
+  _.intersection = function() { // filter??
   };
 
   // Take the difference between one array and a number of other arrays.
