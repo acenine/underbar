@@ -529,5 +529,39 @@
   //
   // Note: This is difficult! It may take a while to implement.
   _.throttle = function(func, wait) {
+    var mustWait = false;
+    return function() { 
+      if(!mustWait) {
+        mustWait = true;
+        setTimeout(function(){
+          mustWait = false;
+        }, wait)
+        return func.apply(this, arguments);
+      }
+    }
   };
+/*
+    return setTimeout(function(){
+      
+      d = _.once(func)
+      return d;
+
+      window.setInterval(function(){
+      d = _.once(func)
+      return d;
+
+      }, wait);
+    }, wait);
+*/
+// try something with delay I likke the duel funcs
+// set time out calls func instead of returning func that can be called
+      //var args = Array.from(arguments);
+      //var parameters = args.slice(2, args.length);
+//      var throtFunc = function() {
+
+
+//      };
+//      return throtFunc;
+
+//  };
 }());
