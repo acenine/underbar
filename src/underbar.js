@@ -389,28 +389,12 @@
 //else minInd is the first non undefined 
 //minInd is _.some non undefined term
       var minInd;
-    /*
-      var everyItemUndf =_.every(copy, function(item){
-        return item === undefined;
-      });
-      if (everyItemUndf) {
-        sorted = _.extend(sorted, copy);
-        copy=[];
-      }else {
-      */
         minInd = _.reduce(copy, function(index, item) {
           if (index === -1 && item !== undefined) {
             return _.indexOf(copy, item);
           }
           return index;
         }, -1);
-  
-      /*
-      if(minInd === -1) {
-        sorted = _.extend(sorted, copy);
-        copy=[];
-      } 
-      */
         var minIndex = _.reduce(copy, function(index, item){
           // if string iterator
           if (typeof iterator === 'string') {
@@ -425,23 +409,12 @@
           }
           return index;
         }, minInd);
-    /*/////
-      copy.forEach(function(obj, ind){
-        typeof iterator === 'string' ? iterator = obj.iterator : iterator;
-        //if (iterator.call(null, obj) < iterator.call(null, copy[minInd])) { //
-        if ((iterator.call(null, obj) !== undefined) && !(iterator.call(null, obj) > iterator.call(null, copy[minInd])) ) {
-        //if (!(iterator.call(null, copy[minInd])>iterator.call(null, obj))) {
-          minInd = ind;
-        }
-      });
-    *//////
-
         sorted.push(copy.splice(minIndex, 1)[0]);
       //}
     }
     return sorted;
-    
   };
+  
   // Zip together two or more arrays with elements of the same index
   // going together.
   //
@@ -540,28 +513,4 @@
       }
     }
   };
-/*
-    return setTimeout(function(){
-      
-      d = _.once(func)
-      return d;
-
-      window.setInterval(function(){
-      d = _.once(func)
-      return d;
-
-      }, wait);
-    }, wait);
-*/
-// try something with delay I likke the duel funcs
-// set time out calls func instead of returning func that can be called
-      //var args = Array.from(arguments);
-      //var parameters = args.slice(2, args.length);
-//      var throtFunc = function() {
-
-
-//      };
-//      return throtFunc;
-
-//  };
 }());
